@@ -29,3 +29,4 @@ else { print $1,$5}
     dsh -m -g "$HOST" pkill -KILL -u 8671
     fi
   done </usr/local/etc/group/all
+echo "All done"
