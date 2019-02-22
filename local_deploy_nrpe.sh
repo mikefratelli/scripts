@@ -18,7 +18,6 @@ fi
 if [ -z "` cat /etc/services | grep nrpe`" ]; then
  echo "nrpe     5666/tcp" >> /etc/services
 fi
- service xinetd restart
  cat > /etc/xinetd.d/nrpe << EOL
  service nrpe
 {
