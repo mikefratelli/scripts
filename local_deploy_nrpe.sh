@@ -20,6 +20,7 @@ if [ -z "` cat /etc/services | grep nrpe`" ]; then
 fi
  service xinetd restart
 sed -i 's/    disable         = yes/disable         = no/' /etc/xinetd.d/nrpe
+ systemctl restart xinetd.service
  netstat -at | egrep "nrpe|5666"
  /usr/local/nagios/libexec/check_nrpe -H localhost
  /usr/local/nagios/libexec/check_nrpe -H localhost -c check_users
