@@ -6,7 +6,7 @@ mkdir /home/cloud_user/downloads
 fi
 cd cloud_user/downloads && wget https://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz#_ga=2.78936084.1450957153.1550765996-1666183519.1550251195
 tar xzf /home/cloud_user/downloads/nagios-*
-cd nagios-* && ./configure && make && make install
+cd /home/cloud_user/downloads/nagios-* && /home/cloud_user/downloads/nagios-*/configure && make && make install
 if [ -z "`getent passwd nagios`" ]; then
 useradd nagios && groupadd nagios && usermod -a -G nagios nagios && chown nagios.nagios /usr/local/nagios && chown -R nagios.nagios /usr/local/nagios/libexec
 else
@@ -38,4 +38,5 @@ EOL
  netstat -at | egrep "nrpe|5666"
  /usr/local/nagios/libexec/check_nrpe -H localhost
  /usr/local/nagios/libexec/check_nrpe -H localhost -c check_users
+
 
