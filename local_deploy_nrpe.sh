@@ -1,5 +1,5 @@
 #!/bin/bash
-#This script will install nrpe on your local server
+#This script will install nrpe on a remote server for you
 yum groupinstall -y "Development tools"
 if [ -z  "`ls /home/cloud_user/downloads 2>/dev/null`"]; then
 mkdir /home/cloud_user/downloads
@@ -19,8 +19,23 @@ if [ -z "` cat /etc/services | grep nrpe`" ]; then
  echo "nrpe     5666/tcp" >> /etc/services
 fi
  service xinetd restart
-sed -i 's/    disable         = yes/disable         = no/' /etc/xinetd.d/nrpe
+ cat > /etc/xinetd.d/nrpe << EOL
+ service nrpe
+{
+    disable         = no
+    socket_type     = stream
+    port            = 5666
+    wait            = no
+    user            = nagios
+    group           = nagios
+    server          = /usr/local/nagios/bin/nrpe
+    server_args     = -c /usr/local/nagios/etc/nrpe.cfg --inetd
+    only_from       = 127.0.0.1 ::1
+    log_on_success  =
+}
+EOL
  systemctl restart xinetd.service
  netstat -at | egrep "nrpe|5666"
  /usr/local/nagios/libexec/check_nrpe -H localhost
  /usr/local/nagios/libexec/check_nrpe -H localhost -c check_users
+
