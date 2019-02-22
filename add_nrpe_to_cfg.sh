@@ -29,5 +29,5 @@ define host {
 }
 EOL
 systemctl reload nagios
-scp /home/cloud_user/ local_deploy_nrpe_v1.01.sh cloud_user@$IPADDR:/home/cloud_user/
+scp /home/cloud_user/local_deploy_nrpe_v1.01.sh cloud_user@$IPADDR:/home/cloud_user/
 echo "script has been copied to $HSTNAME, now it's time to deploy it there!"
