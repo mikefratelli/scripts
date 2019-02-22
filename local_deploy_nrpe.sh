@@ -12,10 +12,12 @@ tar xzf /home/$USER/downloads/nagios-*
 cd /home/$USER/downloads/nagios-* && /home/$USER/downloads/nagios-*/configure && make && make install
 #If the user "nagios" already exists, do not attempt to create the user again
   if [ -z "`getent passwd nagios`" ]; then
-    useradd nagios && groupadd nagios && usermod -a -G nagios nagios && chown nagios.nagios /usr/local/nagios && chown -R nagios.nagios /usr/local/nagios/libexec
+    useradd nagios && groupadd nagios && usermod -a -G nagios nagios 
   else
     echo "user nagios already exists"
   fi
+# Nagios needs permission to use these directories
+chown -R nagios.nagios /usr/local/nagios/libexec && chown nagios.nagios /usr/local/nagios
 # xinetd is the daemon that essentially runs nrpe
 yum install -y xinetd
 # donwload nrpe, uncompress and configure it
