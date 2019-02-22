@@ -38,5 +38,3 @@ EOL
  netstat -at | egrep "nrpe|5666"
  /usr/local/nagios/libexec/check_nrpe -H localhost
  /usr/local/nagios/libexec/check_nrpe -H localhost -c check_users
-
-
