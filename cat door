@@ -2,44 +2,41 @@
 If sound sensor reaches a threshold, servos rotate, thus opening door
 */
 
+#define Mic 0
 #include <Servo.h> 
-
-int knobservoPin = 9;
-// may want to change pin later
-int doorservoPin = 11;
-int sensorPin=7;
-int servoPins= knobservoPin,doorservoPin;
-boolean val =0;
  
-Servo servo;  
+Servo servo1;
+Servo servo2;
  
 int angle = 0;   // servo position in degrees 
  
 void setup() 
 { 
-  servo.attach(servoPins);
-  pinMode(ledPin, OUTPUT);
-  pinMode(sensorPin, INPUT);
+// use pins 3 and 5 for servos
+  servo1.attach(3);
+  servo2.attach(5);
   Serial.begin (9600);
 } 
  
  
 void loop() 
 {
-  val =digitalRead(sensorPin);
+  val =analogRead(Mic);
   Serial.println (val);
-  // when the sensor detects a signal above the threshold value, servo rotates (change "HIGH" to reasonable threshold later)
-  if (val==HIGH) {
+  // when the sensor detects a signal above the threshold value, servo rotates
+  if (val>300) {
     // scan from 0 to 45 degrees
     for(angle = 0; angle < 45; angle++)  
     {                                  
-      servo.write(angle);               
+      servo1.write(angle);
+      servo2.write(angle);
       delay(3000);                   
     } 
     // now scan back from 45 to 0 degrees
     for(angle = 45; angle > 0; angle--)    
     {                                
-      servo.write(angle);           
+      servo1.write(angle);
+      servo2.write(angle);
       delay(3000);       
     } 
   }
