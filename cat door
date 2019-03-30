@@ -16,6 +16,7 @@ void setup()
   servo1.attach(3);
   servo2.attach(5);
   Serial.begin (9600);
+  int x == 1;
 } 
  
  
@@ -24,21 +25,23 @@ void loop()
   val =analogRead(Mic);
   Serial.println (val);
   // when the sensor detects a signal above the threshold value, servo rotates
-  if (val>300) {
+  if (val>300 && x == 1) {
+    x==0;
     // scan from 0 to 45 degrees
     for(angle = 0; angle < 45; angle++)  
     {                                  
       servo1.write(angle);
       delay(2000); // we want the handle to turn before the door opens
-      servo2.write(angle);
-      delay(3000);                   
+      servo2.write(angle);                   
     } 
     // now scan back from 45 to 0 degrees
     for(angle = 45; angle > 0; angle--)    
     {                                
+      servo1.write(angle); // we want the handle to turn back asap
+      delay(3000); // allow cat 3 seconds to enter
       servo2.write(angle);
-      servo1.write(angle);
-      delay(3000);       
+      delay(3000);
+      x==1;
     } 
   }
 }
