@@ -16,7 +16,7 @@ void setup()
   servo1.attach(3);
   servo2.attach(5);
   Serial.begin (9600);
-  int x == 1;
+  int x = 1;
 } 
  
  
@@ -26,7 +26,7 @@ void loop()
   Serial.println (val);
   // when the sensor detects a signal above the threshold value, servo rotates
   if (val>300 && x == 1) {
-    x==0;
+    x=0;
     // scan from 0 to 45 degrees
     for(angle = 0; angle < 45; angle++)  
     {                                  
@@ -41,7 +41,7 @@ void loop()
       delay(3000); // allow cat 3 seconds to enter
       servo2.write(angle);
       delay(3000);
-      x==1;
+      x=1;
     } 
   }
 }
