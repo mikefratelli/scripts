@@ -1,5 +1,5 @@
 /*
-Controlls a servo to rotate thus opening a door
+If sound sensor reaches a threshold, servos rotate, thus opening door
 */
 
 #include <Servo.h> 
