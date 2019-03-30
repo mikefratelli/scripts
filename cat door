@@ -5,8 +5,8 @@ If sound sensor reaches a threshold, servos rotate, thus opening door
 #define Mic 0
 #include <Servo.h> 
  
-Servo servo1;
-Servo servo2;
+Servo servo1; // handle turning servo
+Servo servo2; // door opening servo
  
 int angle = 0;   // servo position in degrees 
  
