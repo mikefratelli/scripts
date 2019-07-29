@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [$# -ne 6]; then
+  echo "Please pass arguments -t <target> -a <alert group> -i <number of instances>"
+  exit 2
+fi
+while getopts ":t:a:i:" opt; do
+  case $opt in
+    t)
+      echo "-t was triggered, Parameter: $OPTARG" >&2
+      TGT=$OPTARG
+      ;;
+    a)
+      echo "-a was triggered, Parameter: $OPTARG" >&2
+      AGP=$OPTARG
+      ;;
+    i)
+      re='^[0-9]+$'
+      if ! [[ $OPTARG =~ $re ]] ; then
+         echo "error: $OPTARG not a number" >&2; exit 1
+      fi
+      echo "-i was triggered, Parameter: $OPTARG" >&2
+      INS=$OPTARG
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+for ((n=0;n<$INS;n++)); do
+  RESPONSE="curl -d \'[{\"target\" : \"$TGT\", \"alertGroup\": \"$AGP\", \"violation\" : true, \"summary\" : \"test alert $n\", \"agent\" : \"test agent\"}]\' -X POST https://apiuser:Alertrepo4t00ls@alertrepoapi.friendfinderinc.com:6520/api/v1/ffn/event -H \"Content-type: application/json\""
+  echo $RESPONSE
+  curl -d "[{\"target\" : \"$n$TGT\", \"alertGroup\": \"$AGP\", \"violation\" : true, \"summary\" : \"test alert $n\", \"agent\" : \"test agent\", \"expireTime\": 15}]" -X POST https://<redacted>:<redacted>@alertrepoapi.friendfinderinc.com:6520/api/v1/ffn/event -H "Content-type: application/json"
+done
+exit 0
